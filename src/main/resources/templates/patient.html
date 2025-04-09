@@ -1,58 +1,55 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="template1"
->
+      layout:decorate="~{template1}">
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
-  <title>patientList</title>
+  <title>Patient List</title>
 </head>
 <body>
 <div layout:fragment="content1">
-  <div class="container mt-4">
-    <h3 class="mb-4">Patient List</h3>
-    <form method="get" th:action="${index}">
-      <label>keyword</label>
-      <input type="text" name="keyword" th:value="${keyword}">
-      <button class="btn btn-primary" type="submit">chercher</button>
-    </form>
-    <div class="table-responsive">
-      <table class="table table-hover table-bordered">
-        <thead class="table-dark">
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">First Name</th>
-          <th scope="col">Last Name</th>
-          <th scope="col">Score</th>
-          <th scope="col">Sick</th>
-          <th scope="col">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="p : ${patientList}">
-          <td th:text="${p.id}"></td>
-          <td th:text="${p.firstname}"></td>
-          <td th:text="${p.lastName}"></td>
-          <td th:text="${p.score}"></td>
-          <td>
-            <span th:if="${p.sick}" class="badge bg-danger">Yes</span>
-            <span th:unless="${p.sick}" class="badge bg-success">No</span>
-          </td>
-          <td>
-            <a onclick="return confirm('are you sure?')" class="btn btn-danger" th:href="@{deletePatient(id=${p.id},keyword=${keyword},page=${currentPage})}">delete</a>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <ul class="nav nav-pills">
-        <li th:each="page,status:${pages}">
-          <a th:class="${status.index==currentPage?'btn btn-info ms-2':'btn btn-outline-info ms-2'}"
-             th:href="@{/index(page=${status.index},keyword = ${keyword})}"
-             th:text="${status.index}"></a>
-        </li>
-      </ul>
-    </div>
+  <h3 class="mb-4">Patient List</h3>
+  <form method="get" th:action="@{/index}">
+    <label>Keyword</label>
+    <input type="text" name="keyword" th:value="${keyword}">
+    <button class="btn btn-primary" type="submit">Chercher</button>
+  </form>
+  <div class="table-responsive mt-3">
+    <table class="table table-hover table-bordered">
+      <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Score</th>
+        <th>Sick</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="p : ${patientList}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.firstname}"></td>
+        <td th:text="${p.lastName}"></td>
+        <td th:text="${p.score}"></td>
+        <td>
+          <span th:if="${p.sick}" class="badge bg-danger">Yes</span>
+          <span th:unless="${p.sick}" class="badge bg-success">No</span>
+        </td>
+        <td>
+          <a onclick="return confirm('Are you sure?')" class="btn btn-danger"
+             th:href="@{/deletePatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}">Delete</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <ul class="nav nav-pills">
+      <li th:each="page,status : ${pages}">
+        <a th:class="${status.index==currentPage ? 'btn btn-info ms-2' : 'btn btn-outline-info ms-2'}"
+           th:href="@{/index(page=${status.index}, keyword=${keyword})}"
+           th:text="${status.index}"></a>
+      </li>
+    </ul>
   </div>
 </div>
 </body>

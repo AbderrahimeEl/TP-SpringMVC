@@ -22,6 +22,10 @@ public class TpSpringMvcApplication {
             patientRepository.save(new Patient(null,"Mohammed","yru",24,false));
             patientRepository.save(new Patient(null,"Imane","yru",24,false));
             patientRepository.save(new Patient(null,"kawthar","yru",24,false));
+            patientRepository.save(new Patient(null,"Ahmed","yru",24,false));
+            patientRepository.save(new Patient(null,"Mohammed","yru",24,false));
+            patientRepository.save(new Patient(null,"Imane","yru",24,false));
+            patientRepository.save(new Patient(null,"kawthar","yru",24,false));
             List<Patient> patients = patientRepository.findAll();
             patients.forEach(p->{
                 System.out.println(p.toString());
