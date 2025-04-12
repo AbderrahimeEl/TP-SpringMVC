@@ -1,5 +1,6 @@
 package net.elm.tpspringmvc.web;
 
+import jakarta.validation.Valid;
 import net.elm.tpspringmvc.entities.Patient;
 import net.elm.tpspringmvc.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +42,9 @@ public class PatientController {
     }
 
     @PostMapping(path = "/savePatient")
-    public  String savePatient(Model model,Patient patient){
+    public  String savePatient(Model model, @Valid Patient patient, BindingResult bindingResult){
+        if(bindingResult.hasErrors())
+            return "formPatients";
         patientRepository.save(patient);
         return  "formPatients";
     }
