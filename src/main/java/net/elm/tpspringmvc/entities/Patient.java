@@ -16,13 +16,13 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty
+    @NotEmpty(message = "must not be null")
     @NotBlank
     private String firstname;
-    @NotEmpty
+    @NotEmpty(message = "must not be null")
     @NotBlank
     private String lastName;
-    @DecimalMin("100")
+    @DecimalMin(value = "100",message = "score must be les than 100")
     private Integer score;
     private Boolean sick;
 }
