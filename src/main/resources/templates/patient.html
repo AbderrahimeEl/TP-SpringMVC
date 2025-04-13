@@ -9,7 +9,7 @@
 <body>
 <div layout:fragment="content1">
   <h3 class="mb-4">Patient List</h3>
-  <form method="get" th:action="@{/index}">
+  <form method="get" th:action="@{/user/index}">
     <label>Keyword</label>
     <input type="text" name="keyword" th:value="${keyword}">
     <button class="btn btn-primary" type="submit">Chercher</button>
@@ -36,12 +36,10 @@
           <span th:if="${p.sick}" class="badge bg-danger">Yes</span>
           <span th:unless="${p.sick}" class="badge bg-success">No</span>
         </td>
-        <td>
+        <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
           <a onclick="return confirm('Are you sure?')" class="btn btn-danger"
-             th:href="@{/deletePatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}">Delete</a>
-        </td>
-        <td>
-          <a class="btn btn-success" th:href="@{/editPatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}">edit</a>
+             th:href="@{/admin/deletePatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}">Delete</a>
+          <a class="btn btn-success" th:href="@{/admin/editPatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}">edit</a>
         </td>
       </tr>
       </tbody>
@@ -49,7 +47,7 @@
     <ul class="nav nav-pills">
       <li th:each="page,status : ${pages}">
         <a th:class="${status.index==currentPage ? 'btn btn-info ms-2' : 'btn btn-outline-info ms-2'}"
-           th:href="@{/index(page=${status.index}, keyword=${keyword})}"
+           th:href="@{/user/index(page=${status.index}, keyword=${keyword})}"
            th:text="${status.index}"></a>
       </li>
     </ul>
